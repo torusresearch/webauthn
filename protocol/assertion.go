@@ -33,7 +33,7 @@ type AuthenticatorAssertionResponse struct {
 	AuthenticatorData URLEncodedBase64 `json:"authenticatorData"`
 	Signature         URLEncodedBase64 `json:"signature"`
 	UserHandle        URLEncodedBase64 `json:"userHandle,omitempty"`
-	PublicKey         URLEncodedBase64 `json:"publicKey,omitempty"`
+	PublicKey         URLEncodedBase64 `json:"publicKey"`
 }
 
 // Parsed form of AuthenticatorAssertionResponse

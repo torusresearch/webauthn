@@ -16,16 +16,14 @@ import (
 type CredentialAssertionResponse struct {
 	PublicKeyCredential
 	AssertionResponse AuthenticatorAssertionResponse `json:"response"`
-	ParsedPublicKey   []byte                         `json:"parsedPublicKey"`
 }
 
 // The parsed CredentialAssertionResponse that has been marshalled into a format
 // that allows us to verify the client and authenticator data inside the response
 type ParsedCredentialAssertionData struct {
 	ParsedPublicKeyCredential
-	Response        ParsedAssertionResponse
-	Raw             CredentialAssertionResponse
-	ParsedPublicKey []byte
+	Response ParsedAssertionResponse
+	Raw      CredentialAssertionResponse
 }
 
 // The AuthenticatorAssertionResponse contains the raw authenticator assertion data and is parsed into
@@ -35,6 +33,7 @@ type AuthenticatorAssertionResponse struct {
 	AuthenticatorData URLEncodedBase64 `json:"authenticatorData"`
 	Signature         URLEncodedBase64 `json:"signature"`
 	UserHandle        URLEncodedBase64 `json:"userHandle,omitempty"`
+	PublicKey         URLEncodedBase64 `json:"publicKey,omitempty"`
 }
 
 // Parsed form of AuthenticatorAssertionResponse
@@ -84,7 +83,6 @@ func ParseCredentialRequestResponseBody(body io.Reader) (*ParsedCredentialAssert
 
 	par.Response.Signature = car.AssertionResponse.Signature
 	par.Response.UserHandle = car.AssertionResponse.UserHandle
-	par.ParsedPublicKey = car.ParsedPublicKey
 
 	// Step 5. Let JSONtext be the result of running UTF-8 decode on the value of cData.
 	// We don't call it cData but this is Step 5 in the spec.
